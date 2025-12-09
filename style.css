@@ -700,3 +700,58 @@ body.dark-mode .countdown { color: #4da6ff !important; }
 #sendBtn:hover {
     background: #0050d1;
 }
+
+#contact-section {
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 600px;
+  margin: 20px auto;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  font-family: Arial, sans-serif;
+}
+
+#contact-section h2 {
+  margin-bottom: 15px;
+  color: #0066ff;
+}
+
+#contactForm label {
+  display: block;
+  margin: 10px 0 5px;
+  font-weight: bold;
+}
+
+#contactForm input, 
+#contactForm select, 
+#contactForm textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+#contactForm textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+#contactForm button {
+  margin-top: 15px;
+  padding: 10px 15px;
+  border: none;
+  background: #0066ff;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+#contactForm button:hover {
+  background: #0050d1;
+}
+
+#contactFeedback {
+  margin-top: 15px;
+  font-weight: bold;
+}
