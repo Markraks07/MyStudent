@@ -1021,3 +1021,32 @@ function setControlsDisabled(disabled) {
     }
 }
 
+const contactForm = document.getElementById("contactForm");
+const contactFeedback = document.getElementById("contactFeedback");
+
+contactForm.addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const entry = {
+    name: document.getElementById("name").value,
+    email: document.getElementById("email").value,
+    type: document.getElementById("type").value,
+    message: document.getElementById("message").value,
+    date: new Date().toISOString()
+  };
+
+  // Guardar en localStorage (para pruebas)
+  let messages = JSON.parse(localStorage.getItem("contactMessages")) || [];
+  messages.push(entry);
+  localStorage.setItem("contactMessages", JSON.stringify(messages));
+
+  // Feedback al usuario
+  contactFeedback.textContent = "¡Mensaje enviado! Gracias por tu aporte.";
+  contactFeedback.style.color = "#00aa55";
+
+  // Resetear formulario
+  contactForm.reset();
+});
+
+
+
