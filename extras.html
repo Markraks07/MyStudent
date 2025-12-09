@@ -102,6 +102,31 @@
       <button id="fiesta" class="btn btn-warning btn-lg px-5">🎉 ¡Aprobé todo!</button>
     </div>
 
+    <div id="contact-section">
+  <h2>Contacto / Reporte de errores</h2>
+  <form id="contactForm">
+    <label for="name">Nombre:</label>
+    <input type="text" id="name" placeholder="Tu nombre" required>
+
+    <label for="email">Correo electrónico:</label>
+    <input type="email" id="email" placeholder="Tu email" required>
+
+    <label for="type">Tipo:</label>
+    <select id="type" required>
+      <option value="error">Error</option>
+      <option value="mejora">Mejora / Sugerencia</option>
+    </select>
+
+    <label for="message">Mensaje:</label>
+    <textarea id="message" placeholder="Describe el error o la sugerencia" required></textarea>
+
+    <button type="submit">Enviar</button>
+  </form>
+
+  <div id="contactFeedback"></div>
+</div>
+
+
   </main>
 
   <!-- CONFETI -->
@@ -117,5 +142,6 @@
     });
   </script>
 </body>
+
 
 </html>
