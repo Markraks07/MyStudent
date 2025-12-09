@@ -865,59 +865,158 @@ function showLogin() {
 }
 
 
-/* ========= HASH SHA-256 ========= */
+/* main.js - versión corregida y más robusta */
 
-async function sha256(text) {
-    const encoder = new TextEncoder();
-    const data = encoder.encode(text);
-    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
-}
+// DOM
+const chatEl = document.getElementById("chat");
+const inputEl = document.getElementById("userInput");
+const sendBtn = document.getElementById("sendBtn");
 
-document.getElementById("sendBtn").addEventListener("click", sendMessage);
-document.getElementById("userInput").addEventListener("keydown", e => {
+// Eventos
+sendBtn.addEventListener("click", sendMessage);
+inputEl.addEventListener("keydown", e => {
     if (e.key === "Enter") sendMessage();
 });
 
 function addToChat(sender, text) {
-    const chat = document.getElementById("chat");
     const p = document.createElement("p");
-
     p.classList.add("msg");
-    p.innerHTML = `<span class="${sender}">${sender === "user" ? "Tú" : "IA"}:</span> ${text}`;
+    p.innerHTML = `<span class="${sender}">${sender === "user" ? "Tú" : "IA"}:</span> ${escapeHtml(text)}`;
+    chatEl.appendChild(p);
+    chatEl.scrollTop = chatEl.scrollHeight;
+    return p; // devuelve el elemento creado
+}
 
-    chat.appendChild(p);
-    chat.scrollTop = chat.scrollHeight;
+// Evita inyección simple (no es estricta, solo para seguridad visual)
+function escapeHtml(unsafe) {
+    return String(unsafe)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+// Extrae el texto real de la respuesta de la IA de forma defensiva
+function parseAIResponse(data) {
+    // Comprueba varias estructuras comunes
+    if (!data) return null;
+
+    // Cloudflare / libs que devuelven { response: "..." } o { result: "..." }
+    if (typeof data === "string") return data;
+    if (data.response && typeof data.response === "string") return data.response;
+    if (data.result && typeof data.result === "string") return data.result;
+    if (data.output_text && typeof data.output_text === "string") return data.output_text;
+    if (data.text && typeof data.text === "string") return data.text;
+
+    // Respuestas en arrays/objetos anidados
+    try {
+        // ejemplo: { choices: [ { text: "..." } ] }
+        if (Array.isArray(data.choices) && data.choices[0]?.text) return data.choices[0].text;
+        // ejemplo: { choices: [ { message: { content: "..." } } ] }
+        if (Array.isArray(data.choices) && data.choices[0]?.message?.content) return data.choices[0].message.content;
+        // ejemplo: { output: [{content: "..."}, ...] }
+        if (Array.isArray(data.output) && data.output[0]?.content) return data.output[0].content;
+        // ejemplo estructura libre
+        const jsonStr = JSON.stringify(data);
+        // intenta buscar la cadena más larga que parezca texto
+        const matches = jsonStr.match(/"([^"]{20,})"/g);
+        if (matches && matches.length) {
+            // devuelve la más larga (heurística)
+            let best = matches.map(m => m.slice(1, -1)).sort((a,b) => b.length - a.length)[0];
+            return best;
+        }
+    } catch (e) {
+        // ignore
+    }
+
+    // fallback
+    return null;
 }
 
 async function sendMessage() {
-    const input = document.getElementById("userInput");
-    const text = input.value.trim();
+    const text = inputEl.value.trim();
     if (!text) return;
 
+    // Añade mensaje del usuario
     addToChat("user", text);
-    input.value = "";
+    inputEl.value = "";
 
-    addToChat("ai", "Pensando...");
+    // Añade "Pensando..." pero guardamos la referencia para eliminar solo ese nodo
+    const thinkingEl = addThinkingElement();
 
-    const response = await fetch("https://TU-WORKER.workers.dev", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            messages: [
-                { role: "user", content: text }
-            ]
-        })
-    });
+    // Desactiva input y botón mientras esperamos
+    setControlsDisabled(true);
 
-    const data = await response.json();
+    try {
+        const res = await fetch("https://TU-WORKER.workers.dev", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                messages: [
+                    { role: "user", content: text }
+                ]
+            })
+        });
 
-    // Limpia el "Pensando..."
-    document.getElementById("chat").lastChild.remove();
+        if (!res.ok) {
+            throw new Error(`Error ${res.status}`);
+        }
 
-    const aiText = data.response || data.result || "Error en la IA";
+        const data = await res.json();
 
-    addToChat("ai", aiText);
+        // extrae texto de la respuesta con la función defensiva
+        let aiText = parseAIResponse(data);
+
+        // si no encontramos nada útil, intenta mirar propiedades comunes en la respuesta raw
+        if (!aiText) {
+            // algunos workers devuelven { response: { output: [...] } } u otros
+            // como fallback, serializamos y mostramos un mensaje de error útil
+            aiText = "La IA respondió, pero no pude extraer el texto. Revisa la consola.";
+            console.warn("Respuesta completa de la IA:", data);
+        }
+
+        // quitamos el "Pensando..." y añadimos la respuesta real
+        removeElementIfExists(thinkingEl);
+        addToChat("ai", aiText);
+
+    } catch (err) {
+        console.error("Error al llamar al worker/IA:", err);
+        removeElementIfExists(thinkingEl);
+        addToChat("ai", "Error: no se pudo obtener respuesta de la IA.");
+    } finally {
+        setControlsDisabled(false);
+    }
 }
 
+function addThinkingElement() {
+    const p = document.createElement("p");
+    p.classList.add("msg");
+    p.dataset.thinking = "1"; // marcador
+    p.innerHTML = `<span class="ai">IA:</span> <em>Pensando...</em>`;
+    chatEl.appendChild(p);
+    chatEl.scrollTop = chatEl.scrollHeight;
+    return p;
+}
+
+function removeElementIfExists(el) {
+    if (!el) return;
+    try {
+        if (el.parentNode === chatEl) el.remove();
+    } catch (e) {
+        // ignore
+    }
+}
+
+function setControlsDisabled(disabled) {
+    inputEl.disabled = !!disabled;
+    sendBtn.disabled = !!disabled;
+    if (disabled) {
+        sendBtn.style.opacity = 0.6;
+        sendBtn.style.cursor = "not-allowed";
+    } else {
+        sendBtn.style.opacity = "";
+        sendBtn.style.cursor = "";
+        inputEl.focus();
+    }
+}
