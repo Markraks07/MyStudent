@@ -1,0 +1,629 @@
+:root {
+  /* Modo claro */
+  --bg-body: #FAFAFA;
+  --bg-card: #FFFFFF;
+  --text-primary: #1A1A1A;
+  --text-secondary: #666666;
+  --accent: #0066FF;
+  --accent-hover: #0055DD;
+  --success: #00C853;
+  --danger: #FF3B30;
+  --warning: #FFD60A;
+  --shadow: rgba(0, 0, 0, 0.08);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-body: #121212;
+    --bg-card: #1E1E1E;
+    --text-primary: #FFFFFF;
+    --text-secondary: #AAAAAA;
+    --accent: #0A84FF;
+    --accent-hover: #5CA8FF;
+    --success: #69F0AE;
+    --danger: #FF453A;
+    --warning: #FFD60A;
+    --shadow: rgba(0, 0, 0, 0.4);
+  }
+}
+
+/* MODO OSCURO MANUAL – ESTA ES LA QUE FUNCIONA */
+.dark-mode {
+  --bg-body: #121212 !important;
+  --bg-card: #1E1E1E !important;
+  --text-primary: #FFFFFF !important;
+  --text-secondary: #AAAAAA !important;
+  --accent: #0A84FF !important;
+  --accent-hover: #5CA8FF !important;
+  --success: #69F0AE !important;
+  --danger: #FF453A !important;
+  --warning: #FFD60A !important;
+  --shadow: rgba(0, 0, 0, 0.4) !important;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg-body);
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: flex;
+}
+
+/* ==================== MODO OSCURO PERFECTO ==================== */
+body.dark-mode {
+  background-color: #121212 !important;
+  color: #e0e0e0 !important;
+}
+
+/* Fondo oscuro solo en el <main> (más limpio aún) */
+body.dark-mode main {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+}
+
+/* Cartas bonitas en modo oscuro */
+body.dark-mode .card {
+  background-color: #252525 !important;
+  border-color: #444 !important;
+  color: #e0e0e0;
+}
+
+/* Tablas bonitas en oscuro */
+body.dark-mode .table {
+  color: #ddd;
+}
+
+body.dark-mode .table-light,
+body.dark-mode .table thead {
+  background-color: #2c2c2c !important;
+  color: #aaa;
+}
+
+body.dark-mode .table-hover tbody tr:hover {
+  background-color: #333 !important;
+}
+
+/* Inputs y formularios legibles */
+body.dark-mode input,
+body.dark-mode select,
+body.dark-mode .form-control {
+  background-color: #333 !important;
+  border-color: #555 !important;
+  color: #fff !important;
+}
+
+body.dark-mode input::placeholder {
+  color: #999 !important;
+}
+
+/* MODO OSCURO → tarjetas bonitas y legibles */
+body.dark-mode .feature-card {
+  background: #252525 !important;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  color: #e0e0e0;
+}
+
+body.dark-mode .feature-card h3 {
+  color: #4da6ff;
+}
+
+body.dark-mode .feature-card:hover {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+}
+
+/* ===== ASIDE ===== */
+aside {
+  width: 280px;
+  background: var(--bg-card);
+  border-right: 1px solid rgba(0, 0, 0, 0.06);
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow) 4px 0 16px;
+  z-index: 100;
+}
+
+/* Logo */
+aside header {
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+aside header h1 a {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+/* Menú */
+aside nav {
+  flex: 1;
+  padding: 1rem 0;
+}
+
+aside nav ul {
+  list-style: none;
+}
+
+aside nav a {
+  display: block;
+  padding: 1.1rem 2rem;
+  color: var(--text-primary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+aside nav a:hover {
+  background: var(--accent);
+  color: white;
+}
+
+/* Footer */
+aside footer {
+  padding: 1.5rem;
+  text-align: center;
+  font-size: 0.85rem;
+  opacity: 0.7;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.text-footer {
+  color: var(--text-secondary);
+}
+
+/* ===== MAIN ===== */
+main {
+  flex: 1;
+  margin-left: 280px;
+  padding: 3rem;
+  max-width: 1000px;
+}
+
+/* Cabecera con botón modo oscuro */
+main header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+main header h2 {
+  font-size: 2.4rem;
+}
+
+#dark-toggle {
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: all 0.3s;
+}
+
+#dark-toggle:hover {
+  transform: scale(1.15);
+}
+
+/* Página de inicio */
+.home-info {
+  text-align: center;
+  margin-top: 8vh;
+}
+
+.home-info h1 {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(90deg, var(--accent), #00C853);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.home-info p {
+  font-size: 1.3rem;
+  opacity: 0.8;
+}
+
+.features-horizontal {
+  display: flex;
+  gap: 2rem;
+  overflow-x: auto;
+  /* scroll horizontal en móvil si no cabe */
+  padding: 2rem 0;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  /* scroll suave en iOS */
+}
+
+.feature-card {
+  flex: 0 0 320px;
+  /* ancho fijo → nunca se encogen */
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  scroll-snap-align: start;
+}
+
+.feature-card .icon {
+  font-size: 3.8rem;
+  margin-bottom: 1rem;
+}
+
+.feature-card h3 {
+  color: #0066ff;
+  margin-bottom: 0.8rem;
+}
+
+/* FIX MODO OSCURO + ASIDE EN EXTRAS.HTML */
+body.dark-mode #extras-main {
+  background: #121212;
+  color: #e0e0e0;
+}
+body.dark-mode .card { background: #1e1e1e !important; border-color: #333 !important; }
+body.dark-mode .alert-info { background: #0d3349 !important; border-color: #1e5f88 !important; color: #a0d8ff; }
+body.dark-mode .sticky { background: #5f5f00 !important; }
+body.dark-mode .countdown { color: #4da6ff !important; }
+
+/* El aside no tape nada en extras */
+#extras-main {
+  margin-left: 280px;
+  min-height: 100vh;
+  padding: 2rem;
+  transition: margin-left 0.3s;
+}
+
+@media (max-width: 992px) {
+  #extras-main { margin-left: 80px; }
+}
+
+/* ===== RESPONSIVE MÓVIL ===== */
+@media (max-width: 900px) {
+  aside {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  aside.open {
+    transform: translateX(0);
+  }
+
+  main {
+    margin-left: 0;
+    padding: 2rem;
+  }
+
+  /* Botón hamburguesa (añádelo al HTML si aún no lo tienes) */
+  .menu-toggle {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+
+    /* ============= MYSTUDENT - ESTILOS COMPLETOS 2025 ============= */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f8f9fa;
+      color: #212529;
+      transition: all 0.4s;
+      min-height: 100vh;
+    }
+
+    body.dark-mode {
+      background: #121212;
+      color: #e0e0e0;
+    }
+
+    body.dark-mode .card,
+    body.dark-mode .list-group-item {
+      background: #1e1e1e !important;
+      border-color: #333 !important;
+    }
+
+    body.dark-mode .form-control {
+      background: #333;
+      color: white;
+      border-color: #555;
+    }
+
+    body.dark-mode .table {
+      color: #ddd;
+    }
+
+    body.dark-mode .table-light {
+      background: #2c2c2c !important;
+    }
+
+    /* Menú lateral */
+    aside {
+      position: fixed;
+      ;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 280px;
+      background: white;
+      padding: 2rem;
+      border-right: 1px solid #ddd;
+      z-index: 100;
+      transition: width 0.3s;
+    }
+
+    aside h1 {
+      font-size: 2.8rem;
+      color: #0066ff;
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    aside ul {
+      list-style: none;
+    }
+
+    aside li {
+      padding: 1rem;
+      margin: 0.5rem 0;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    aside li:hover,
+    aside li.active {
+      background: #e6f0ff;
+      color: #0066ff;
+      font-weight: 700;
+    }
+
+    aside .text-footer {
+      position: absolute;
+      bottom: 20px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      color: #888;
+    }
+
+    /* Main */
+    main {
+      margin-left: 280px;
+      padding: 2rem;
+      transition: margin 0.3s;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    /* Cards y tablas */
+    .card {
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+      margin-bottom: 2rem;
+    }
+
+    .table {
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .list-group-item {
+      border-radius: 10px !important;
+      margin-bottom: 8px;
+    }
+
+    /* Pomodoro */
+    #timer {
+      font-size: 6rem;
+      font-weight: bold;
+      color: #0066ff;
+    }
+
+    /* Sticky notes */
+    .stickies {
+      background: #ffeb3b;
+      padding: 15px;
+      border-radius: 10px;
+      margin: 10px 0;
+      position: relative;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .stickies::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-top: 10px solid #ffeb3b;
+      transform: translateX(-50%);
+    }
+
+    /* Confeti */
+    #confeti {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f9fa;
+      color: #333;
+    }
+    body.dark-mode {
+      background-color: #121212;
+      color: #f5f5f5;
+    }
+    aside {
+      background-color: #fff;
+      width: 220px;
+      position: fixed;
+      height: 100%;
+      padding: 20px;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    }
+    body.dark-mode aside {
+      background-color: #1e1e1e;
+      box-shadow: 2px 0 5px rgba(255,255,255,0.05);
+    }
+    aside h1 a {
+      text-decoration: none;
+      color: inherit;
+    }
+    aside nav ul {
+      list-style: none;
+      padding: 0;
+    }
+    aside nav li {
+      margin: 15px 0;
+    }
+    aside nav li a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+    }
+    body.dark-mode aside nav li a {
+      color: #f5f5f5;
+    }
+    aside nav li.active a {
+      color: #0d6efd;
+      font-weight: bold;
+    }
+    main {
+      margin-left: 240px;
+    }
+    .card {
+      border-radius: 12px;
+      transition: transform 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-3px);
+    }
+    .motivacion {
+      font-weight: 600;
+    }
+    #medalla {
+      font-size: 3rem;
+    }
+    #modo-examen, #fiesta {
+      transition: transform 0.2s;
+    }
+    #modo-examen:hover, #fiesta:hover {
+      transform: translateY(-3px);
+    }
+    /* Botón menú responsive */
+    .menu-toggle {
+      display: none;
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      z-index: 999;
+      background-color: #0d6efd;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 15px;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    @media (max-width: 768px) {
+      aside {
+        position: fixed;
+        left: -250px;
+        transition: left 0.3s;
+        z-index: 998;
+      }
+      aside.show {
+        left: 0;
+      }
+      main {
+        margin-left: 0;
+        padding: 20px;
+      }
+      .menu-toggle {
+        display: block;
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+      aside {
+        width: 80px;
+        padding: 1rem;
+      }
+
+      aside h1 {
+        font-size: 1.8rem;
+      }
+
+      aside li {
+        text-align: center;
+        font-size: 0.9rem;
+      }
+
+      main {
+        margin-left: 80px;
+      }
+    }
+
+    z-index: 200;
+    background: var(--accent);
+    color: white;
+    border: none;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    font-size: 1.8rem;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(0, 102, 255, 0.4);
+  }
+}
+
+#excusa {
+  animation: pulse 0.6s;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.05);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.hover-lift {
+  transition: transform 0.3s;
+}
+
+.hover-lift:hover {
+  transform: translateY(-10px);
+}

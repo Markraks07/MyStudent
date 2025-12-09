@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" href="journal-bookmark.svg">
+    <title>Mis Notas · MyStudent</title>
+</head>
+<body>
+
+    <button class="menu-toggle">☰</button>
+
+    <aside>
+        <header><h1><a href="index.html">MyStudent</a></h1></header>
+        <nav>
+            <ul>
+                <li class="boton-menu"><a href="deberes.html">Deberes</a></li>
+                <li class="boton-menu"><a href="calcular-media.html">Calcular Media</a></li>
+                <li class="boton-menu active"><a href="notas.html">Mis Notas</a></li>
+                <li class="boton-menu"><a href="topsecret.html">Top Secret</a></li>
+                <li class="boton-menu"><a href="extras.html">Extras</a></li>
+            </ul>
+        </nav>
+        <footer><p class="text-footer">© MyStudents Coder</p></footer>
+    </aside>
+
+    <main>
+        <header class="d-flex justify-content-between align-items-center mb-4">
+            <h2 id="greeting" class="m-0">¡Hola!</h2>
+            <button id="dark-toggle" aria-label="Modo oscuro">🌙</button>
+        </header>
+
+        <div class="container-fluid">
+            <h1 class="mb-4">Mis Notas Sacadas</h1>
+
+            <!-- Formulario rápido -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <div class="row g-3 align-items-end">
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" id="nuevo-concepto" placeholder="Ej: Examen tema 3">
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" id="nueva-materia" placeholder="Materia">
+                        </div>
+                        <div class="col-md-2">
+                            <input type="number" step="0.01" min="0" max="10" class="form-control" id="nueva-nota" placeholder="Nota">
+                        </div>
+                        <div class="col-md-2">
+                            <input type="date" class="form-control" id="nueva-fecha">
+                        </div>
+                        <div class="col-md-1">
+                            <button id="add-nota-rapida" class="btn btn-success w-100">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabla editable y ordenada por fecha -->
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Concepto</th>
+                                    <th>Materia</th>
+                                    <th class="text-center">Nota</th>
+                                    <th class="text-center">Fecha</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-notas">
+                                <!-- JS genera las filas editables -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <h2 class="display-6">
+                            Media general: <strong id="media-general" class="text-primary fw-bold">—</strong>
+                        </h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>
