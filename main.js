@@ -874,3 +874,50 @@ async function sha256(text) {
     const hashArray = Array.from(new Uint8Array(hashBuffer));
     return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
 }
+
+document.getElementById("sendBtn").addEventListener("click", sendMessage);
+document.getElementById("userInput").addEventListener("keydown", e => {
+    if (e.key === "Enter") sendMessage();
+});
+
+function addToChat(sender, text) {
+    const chat = document.getElementById("chat");
+    const p = document.createElement("p");
+
+    p.classList.add("msg");
+    p.innerHTML = `<span class="${sender}">${sender === "user" ? "Tú" : "IA"}:</span> ${text}`;
+
+    chat.appendChild(p);
+    chat.scrollTop = chat.scrollHeight;
+}
+
+async function sendMessage() {
+    const input = document.getElementById("userInput");
+    const text = input.value.trim();
+    if (!text) return;
+
+    addToChat("user", text);
+    input.value = "";
+
+    addToChat("ai", "Pensando...");
+
+    const response = await fetch("https://TU-WORKER.workers.dev", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            messages: [
+                { role: "user", content: text }
+            ]
+        })
+    });
+
+    const data = await response.json();
+
+    // Limpia el "Pensando..."
+    document.getElementById("chat").lastChild.remove();
+
+    const aiText = data.response || data.result || "Error en la IA";
+
+    addToChat("ai", aiText);
+}
+
