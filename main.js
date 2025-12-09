@@ -949,7 +949,7 @@ async function sendMessage() {
     setControlsDisabled(true);
 
     try {
-        const res = await fetch("https://TU-WORKER.workers.dev", {
+        const res = await fetch("mystudent.markitusmine2-0.workers.dev", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -1020,3 +1020,4 @@ function setControlsDisabled(disabled) {
         inputEl.focus();
     }
 }
+
