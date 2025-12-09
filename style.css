@@ -626,4 +626,77 @@ body.dark-mode .countdown { color: #4da6ff !important; }
 
 .hover-lift:hover {
   transform: translateY(-10px);
+
+}
+
+/* Contenedor principal del chat */
+#ai-chat-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+    font-family: Arial, sans-serif;
+}
+
+/* Caja donde se muestran los mensajes */
+#chat {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 15px;
+    height: 350px;
+    overflow-y: auto;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    margin-bottom: 15px;
+}
+
+/* Cada mensaje */
+.msg {
+    margin: 10px 0;
+    line-height: 1.4;
+}
+
+/* Estilo del nombre "Tú" */
+.user {
+    font-weight: bold;
+    color: #0066ff;
+}
+
+/* Estilo del nombre "IA" */
+.ai {
+    font-weight: bold;
+    color: #00aa55;
+}
+
+/* Input + botón */
+#inputBox {
+    display: flex;
+    gap: 10px;
+}
+
+/* Input */
+#userInput {
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    outline: none;
+    transition: 0.2s;
+}
+
+#userInput:focus {
+    border-color: #0066ff;
+}
+
+/* Botón */
+#sendBtn {
+    padding: 10px 15px;
+    border: none;
+    background: #0066ff;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#sendBtn:hover {
+    background: #0050d1;
 }
