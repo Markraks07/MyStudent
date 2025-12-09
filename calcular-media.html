@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" href="journal-bookmark.svg">
+    <title>Calcular Media · MyStudent</title>
+</head>
+
+<body>
+
+    <button class="menu-toggle">☰</button>
+
+    <aside>
+        <header>
+            <h1><a href="index.html">MyStudent</a></h1>
+        </header>
+        <nav>
+            <ul>
+                <li class="boton-menu"><a href="deberes.html">Deberes</a></li>
+                <li class="boton-menu active"><a href="calcular-media.html">Calcular Media</a></li>
+                <li class="boton-menu"><a href="notas.html">Mis Notas</a></li>
+                <li class="boton-menu"><a href="topsecret.html">Top Secret</a></li>
+                <li class="boton-menu"><a href="extras.html">Extras</a></li>
+            </ul>
+        </nav>
+        <footer>
+            <p class="text-footer">© MyStudents Coder</p>
+        </footer>
+    </aside>
+
+    <main>
+        <header class="d-flex justify-content-between align-items-center mb-4">
+            <h2 id="greeting" class="m-0">¡Hola!</h2>
+            <button id="dark-toggle" aria-label="Modo oscuro">🌙</button>
+        </header>
+
+        <div class="container-fluid">
+
+            <!-- APARTADO 1: CALCULAR NOTA DEL TRIMESTRE CON PESOS -->
+            <h1 class="mb-4">Nota del trimestre (con exámenes, trabajos, controles...)</h1>
+
+            <div class="card shadow-sm mb-5">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h3 class="m-0">Materia: <span id="nombre-materia-display" contenteditable="true"
+                                class="text-primary fw-bold">Matemáticas</span></h3>
+                        <button id="add-evaluacion" class="btn btn-success">+ Añadir nota</button>
+                    </div>
+
+                    <div id="evaluaciones-container" class="row g-3">
+                        <!-- Ejemplo inicial -->
+                    </div>
+
+                    <hr class="my-4">
+
+                    <div class="text-center">
+                        <h2 class="display-4 fw-bold text-primary">
+                            Nota del trimestre: <span id="nota-final-trimestre">—</span>
+                        </h2>
+                        <p class="text-muted">Suma de pesos: <span id="suma-pesos">40</span>%</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- APARTADO 2: Notas por materia (el de antes) -->
+            <h1 class="mb-4">Notas por materia durante el curso</h1>
+            <div class="card">
+                <div class="card-body">
+                    <button id="add-materia" class="btn btn-success mb-3">+ Añadir materia</button>
+                    <div id="materias-container"></div>
+                    <div class="text-center mt-4">
+                        <h4>Media global del curso: <span id="media-global">—</span></h4>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="main.js"></script>
+</body>
+
+</html>
