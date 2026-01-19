@@ -386,4 +386,12 @@ input:checked + .slider:before { transform: translateX(14px); }
     .dashboard-grid {
         grid-template-columns: 1fr;
     }
+
 }
+
+@media (max-width: 768px) {
+    .menu-mobile-btn { display: block; font-size: 24px; background: none; border: none; color: var(--text-main); cursor: pointer; }
+    .sidebar { position: fixed; left: -250px; transition: 0.3s; z-index: 1000; }
+    .sidebar.active { left: 0; }
+}
+@media (min-width: 769px) { .menu-mobile-btn { display: none; } }
