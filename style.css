@@ -1,0 +1,389 @@
+/* ==========================================
+   1. VARIABLES Y RESET (MODO CLARO Y OSCURO)
+   ========================================== */
+:root {
+    /* Modo Claro */
+    --bg: #f4f7fe;
+    --white: #ffffff;
+    --text-main: #1b254b;
+    --text-grey: #a3aed0;
+    --border-color: #e0e5f2;
+    --primary: #4318ff;
+    --primary-hover: #3311db;
+    --danger: #ff4d4d;
+    --success: #05cd99;
+    --card-shadow: 0 10px 30px rgba(67, 24, 255, 0.05);
+}
+
+/* Asegúrate de que esto esté justo después de :root */
+body.dark-mode {
+    --bg: #0b1437 !important;
+    --white: #111c44 !important;
+    --text-main: #ffffff !important;
+    --text-grey: #cbd5e1 !important;
+    --border-color: #1b254b !important;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text-main);
+    transition: background 0.3s, color 0.3s;
+    overflow-x: hidden;
+}
+
+/* ==========================================
+   2. NAVBAR Y SIDEBAR
+   ========================================== */
+.navbar {
+    height: 70px;
+    background: var(--white);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.brand {
+    font-weight: 800;
+    font-size: 22px;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid var(--primary);
+    transition: 0.2s;
+}
+
+.sidebar-slim {
+    width: 80px;
+    height: calc(100vh - 70px);
+    background: var(--white);
+    position: fixed;
+    top: 70px;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+    border-right: 1px solid var(--border-color);
+    z-index: 90;
+}
+
+.sidebar-slim a {
+    color: var(--text-grey);
+    font-size: 20px;
+    margin-bottom: 30px;
+    transition: 0.3s;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    text-decoration: none;
+}
+
+.sidebar-slim a.active, .sidebar-slim a:hover {
+    color: var(--primary);
+    background: var(--bg);
+}
+
+/* ==========================================
+   3. LAYOUT Y TARJETAS (CARDS)
+   ========================================== */
+.main-layout {
+    margin-top: 70px;
+    margin-left: 80px;
+    padding: 40px;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 25px;
+    margin-top: 30px;
+}
+
+.card {
+    background: var(--white);
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: var(--card-shadow);
+    border: 1px solid var(--border-color);
+    margin-bottom: 20px;
+}
+
+/* ==========================================
+   4. FORMULARIOS E INPUTS
+   ========================================== */
+input, select, textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    background: var(--bg);
+    color: var(--text-main);
+    font-size: 14px;
+    outline: none;
+    transition: 0.3s;
+}
+
+input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(67, 24, 255, 0.1);
+}
+
+.btn-add-task {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-add-task:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+}
+
+/* ==========================================
+   5. SISTEMA DE TAREAS (TASK ITEMS)
+   ========================================== */
+.task-item {
+    background: var(--white);
+    padding: 18px;
+    border-radius: 16px;
+    margin-bottom: 12px;
+    border-left: 5px solid var(--primary);
+    border-bottom: 1px solid var(--border-color);
+    transition: transform 0.2s;
+}
+
+.task-item:hover { transform: translateX(5px); }
+
+.priority-3 { border-left-color: #ff4d4d !important; } /* Alta */
+.priority-2 { border-left-color: #ffb800 !important; } /* Media */
+.priority-1 { border-left-color: #05cd99 !important; } /* Baja */
+
+.btn-complete-task {
+    min-width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+    background: var(--bg);
+    color: var(--success);
+    cursor: pointer;
+    font-size: 18px;
+    transition: 0.2s;
+}
+
+.btn-complete-task:hover {
+    background: var(--success);
+    color: white;
+}
+
+.badge-materia {
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+/* Colores Materias */
+.materia-catala { background: #fee2e2; color: #991b1b; }
+.materia-mates { background: #e0f2fe; color: #075985; }
+.materia-angles { background: #f0fdf4; color: #166534; }
+.materia-socials { background: #fef9c3; color: #854d0e; }
+
+/* ==========================================
+   6. MENÚ DE PERFIL Y DROPDOWN
+   ========================================== */
+.profile-dropdown {
+    position: absolute;
+    top: 75px;
+    right: 40px;
+    width: 240px;
+    background: var(--white);
+    border-radius: 16px;
+    padding: 15px;
+    box-shadow: var(--card-shadow);
+    display: none;
+    flex-direction: column;
+    border: 1px solid var(--border-color);
+    z-index: 1000;
+}
+
+.dropdown-item {
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: 0.2s;
+}
+
+.dropdown-item:hover { background: var(--bg); }
+
+/* Switch Toggle */
+.switch { position: relative; width: 34px; height: 20px; margin-left: auto; }
+.switch input { opacity: 0; width: 0; height: 0; }
+.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background: #ccc; transition: .4s; border-radius: 34px; }
+.slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background: white; transition: .4s; border-radius: 50%; }
+input:checked + .slider { background: var(--primary); }
+input:checked + .slider:before { transform: translateX(14px); }
+
+/* ==========================================
+   7. RANKING Y XP
+   ========================================== */
+.xp-badge {
+    background: var(--primary);
+    color: white;
+    padding: 6px 15px;
+    border-radius: 20px;
+    font-weight: 800;
+    font-size: 13px;
+}
+
+.ranking-row {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 5px;
+}
+
+.ranking-row:nth-child(even) { background: var(--bg); }
+
+/* ==========================================
+   8. MODAL DE LOGIN (ESTILO DARK COMPATIBLE)
+   ========================================== */
+#auth-modal {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    backdrop-filter: blur(5px);
+}
+
+#auth-modal .card {
+    width: 400px;
+    text-align: center;
+    background: var(--white);
+}
+
+.btn-login { background: var(--primary); color: white; border: none; padding: 12px; border-radius: 10px; cursor: pointer; width: 100%; font-weight: bold; margin-bottom: 10px; }
+.btn-register { background: none; border: 1px solid var(--primary); color: var(--primary); padding: 12px; border-radius: 10px; cursor: pointer; width: 100%; font-weight: bold; }
+
+.sidebar-slim {
+    overflow-y: auto; /* Permite scroll si hay muchos iconos */
+    scrollbar-width: none; /* Oculta la barra de scroll en Firefox */
+}
+
+.sidebar-slim::-webkit-scrollbar {
+    display: none; /* Oculta la barra de scroll en Chrome/Safari */
+}
+
+.sidebar-slim a {
+    margin-bottom: 15px; /* Reducimos el espacio entre iconos para que quepan más */
+    font-size: 18px; /* Iconos un poco más pequeños */
+}
+
+/* ==========================================
+   9. MEJORAS PARA APUNTES, CHAT Y ARCADE
+   ========================================== */
+
+/* Estilos para el Grid de Notas (apuntes.html) */
+#notes-grid .card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 200px;
+    transition: transform 0.2s;
+    border-top: 4px solid var(--primary);
+}
+
+#notes-grid .card:hover {
+    transform: translateY(-5px);
+}
+
+/* Estilos para Burbujas de Chat (chat.html) */
+.chat-message {
+    max-width: 80%;
+    padding: 10px 15px;
+    border-radius: 15px;
+    font-size: 14px;
+    line-height: 1.4;
+    position: relative;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.msg-others {
+    align-self: flex-start;
+    background: var(--border-color);
+    color: var(--text-main);
+    border-bottom-left-radius: 2px;
+}
+
+.msg-me {
+    align-self: flex-end;
+    background: var(--primary);
+    color: white;
+    border-bottom-right-radius: 2px;
+}
+
+/* Estilos para el Área Secreta (secreto.html) */
+.arcade-mode .card.gold-card {
+    background: rgba(17, 28, 68, 0.6) !important; /* Fondo translúcido VIP */
+    border: 2px solid #ffd700 !important;
+}
+
+/* Ajustes de Responsividad Básica */
+@media (max-width: 768px) {
+    .main-layout {
+        margin-left: 0;
+        padding: 20px;
+    }
+    .sidebar-slim {
+        display: none; /* En móviles podrías cambiarlo por un menú inferior */
+    }
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
