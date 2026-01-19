@@ -711,3 +711,80 @@ window.toggleSidebar = function() {
         sidebar.classList.toggle('active');
     }
 };
+
+// 1. GUARDAR NOTA
+window.addGrade = function() {
+    const materia = document.getElementById('grade-materia').value;
+    const nombre = document.getElementById('grade-name').value;
+    const valor = parseFloat(document.getElementById('grade-value').value);
+
+    if (!nombre || isNaN(valor)) return alert("Datos incompletos");
+
+    // Guardamos en 'notas_escolares'
+    database.ref('notas_escolares/' + userData.uid).push({
+        materia, nombre, valor, fecha: Date.now()
+    }).then(() => {
+        alert("¡Nota guardada!");
+        document.getElementById('grade-name').value = "";
+        document.getElementById('grade-value').value = "";
+    });
+};
+
+// 2. CARGAR NOTAS Y CALCULAR MEDIA
+function cargarNotasEscolares(uid) {
+    database.ref('notas_escolares/' + uid).on('value', (snap) => {
+        const container = document.getElementById('grades-list');
+        const mediaDisplay = document.getElementById('resultado-media');
+        if (!container) return;
+
+        container.innerHTML = "";
+        let suma = 0;
+        let total = 0;
+
+        if (!snap.exists()) {
+            container.innerHTML = "<p>No hay notas registradas.</p>";
+            if (mediaDisplay) mediaDisplay.innerText = "0.0";
+            return;
+        }
+
+        snap.forEach(child => {
+            const n = child.val();
+            suma += parseFloat(n.valor);
+            total++;
+            const color = n.valor >= 5 ? '#05cd99' : '#ff4d4d';
+            
+            container.innerHTML += `
+                <div class="card" style="display:flex; justify-content:space-between; border-left: 5px solid ${color}; margin-bottom:10px; padding:15px;">
+                    <div><small>${n.materia}</small><h3>${n.nombre}</h3></div>
+                    <div style="font-size:24px; font-weight:800; color:${color}">${n.valor}</div>
+                </div>`;
+        });
+
+        // Esto arregla "lo de la media no va"
+        if (mediaDisplay && total > 0) {
+            mediaDisplay.innerText = (suma / total).toFixed(2);
+        }
+    });
+}
+
+window.calcularMediaManual = function() {
+    const notas = document.querySelectorAll('.m-nota');
+    const pesos = document.querySelectorAll('.m-peso');
+    let sumaPonderada = 0;
+    let pesoTotal = 0;
+
+    notas.forEach((input, i) => {
+        const n = parseFloat(input.value);
+        const p = parseFloat(pesos[i].value);
+        if (!isNaN(n) && !isNaN(p)) {
+            sumaPonderada += (n * (p / 100));
+            pesoTotal += p;
+        }
+    });
+
+    const resultado = document.getElementById('resultado-media-manual');
+    if (resultado) {
+        resultado.innerText = sumaPonderada.toFixed(2);
+        resultado.style.color = sumaPonderada >= 5 ? "#05cd99" : "#ff4d4d";
+    }
+};
