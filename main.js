@@ -702,4 +702,12 @@ function actualizarContadorTareas(uid) {
             contador.style.display = num > 0 ? 'inline-block' : 'none';
         }
     });
+
 }
+
+window.toggleSidebar = function() {
+    const sidebar = document.querySelector('.sidebar');
+    if (sidebar) {
+        sidebar.classList.toggle('active');
+    }
+};
